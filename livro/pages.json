@@ -88,12 +88,12 @@
     "quote": null
   },
   {
-    "id": "moto-04",
+    "id": "fusca-01",
     "year": 1959,
-    "title": "Triumph Bonneville",
-    "sub": "United Kingdom · 1959",
-    "body": "Meanwhile, on twisty British roads, the Triumph Bonneville mixed two cylinders and a leather seat into the perfect classic motorcycle. Style and speed, in equal parts.",
-    "quote": "_Two wheels, one open road._"
+    "title": "VW Fusca",
+    "sub": "Brazil · 1959",
+    "body": "Volkswagen started building the Beetle in São Bernardo do Campo this year — the people's car finally arrived in Brazil. Air-cooled engine in the back, round headlights up front, a curve you'd recognize anywhere.",
+    "quote": null
   },
   {
     "id": "escavadeira",
@@ -125,6 +125,14 @@
     "title": "Sikorsky CH-53",
     "sub": "USA · 1966",
     "body": "Up above, helicopters joined the family. The CH-53 Sea Stallion could carry tanks slung from below — a flying truck for places no road could reach.",
+    "quote": null
+  },
+  {
+    "id": "onibus-01",
+    "year": 1968,
+    "title": "Mercedes-Benz LO 1113",
+    "sub": "Brazil · 1968",
+    "body": "On Brazilian roads, a different machine was carrying everyone — the LO 1113. People called it the cara-de-cavalo, the horse-face, for its rounded snout and tall headlights. A workhorse that climbed mountains, crossed states, ran for decades.",
     "quote": null
   },
   {
@@ -224,11 +232,19 @@
     "quote": null
   },
   {
+    "id": "trem-cr450",
+    "year": 2026,
+    "title": "CRRC CR450 Fuxing",
+    "sub": "China · 2026",
+    "body": "Steam started this story. The CR450 is where it goes now — the fastest commercial train in the world at 450 km/h. The needle nose slices through air so fast the wind barely notices it passing.",
+    "quote": "_Trains never stopped getting faster._"
+  },
+  {
     "id": "andy-fim",
     "year": 9999,
     "title": "See You Soon",
     "sub": "— Andy",
-    "body": "From the first steam engine to the tallest crane, machines keep changing. But there's always a kid somewhere holding a wrench, wanting to know how things work. That's where every new machine begins.",
+    "body": "From the first steam engine to the tallest crane, machines keep changing. But there's always a kid somewhere with a book, wanting to know how things work. That's where every new machine begins.",
     "quote": null
   }
 ]

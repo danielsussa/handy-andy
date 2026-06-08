@@ -17,6 +17,54 @@
     --ink: #0a0a0a;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* === PRINT/PDF mode (ativado por ?print ou body.print) === */
+  body.print {
+    background: white !important;
+  }
+  body.print header.hero,
+  body.print footer,
+  body.print .tag,
+  body.print .tag-cover {
+    display: none !important;
+  }
+  body.print main#livro,
+  body.print .capa-wrap {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+  body.print main#livro {
+    gap: 0;
+  }
+  body.print .capa-wrap,
+  body.print .card {
+    width: 280mm;
+    height: 187mm;
+    padding: 0;
+    margin: 0;
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    overflow: hidden;
+  }
+  body.print .page,
+  body.print .page.capa,
+  body.print .page.contracapa {
+    width: 280mm !important;
+    height: 187mm !important;
+    box-shadow: none !important;
+    aspect-ratio: auto;
+  }
+  body.print .capa-card {
+    gap: 0;
+  }
+  @page {
+    size: 280mm 187mm;
+    margin: 0;
+  }
   body {
     background: var(--canvas);
     color: var(--text);
@@ -60,6 +108,24 @@
     font-family: 'Special Elite', monospace;
     font-size: 11px; letter-spacing: 3px;
     color: var(--muted);
+  }
+  header.hero .pdf-link {
+    margin-top: 18px;
+  }
+  header.hero .pdf-link a {
+    display: inline-block;
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; letter-spacing: 2px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    transition: all .15s ease;
+  }
+  header.hero .pdf-link a:hover {
+    background: var(--accent);
+    color: var(--canvas);
   }
 
   main {
@@ -124,6 +190,64 @@
     letter-spacing: 2px;
   }
 
+  /* === CONTRACAPA — back cover with text about Andy === */
+  .page.contracapa {
+    aspect-ratio: 1536 / 1024;
+    width: 100%;
+    background:
+      radial-gradient(120% 80% at 50% 40%, #fbf3df 0%, #f4e9cf 80%);
+    position: relative;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.04),
+      0 30px 60px -20px rgba(0,0,0,.6),
+      0 14px 30px -10px rgba(0,0,0,.5);
+  }
+  .page.contracapa .about {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8% 12%;
+    color: #1a1a1a;
+  }
+  .page.contracapa .about .label {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 6px;
+    color: #555;
+    margin-bottom: 24px;
+  }
+  .page.contracapa .about h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(22px, 3.2vw, 32px);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .page.contracapa .about p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(13px, 1.6vw, 17px);
+    line-height: 1.65;
+    color: #2a2a2a;
+    max-width: 70ch;
+    margin: 0 0 14px;
+  }
+  .page.contracapa .about p.lead {
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+  .page.contracapa .about .closing {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 4px;
+    color: #555;
+    margin-top: 26px;
+  }
+
   .card { display: grid; gap: 14px; }
   .card .tag {
     font-family: 'Special Elite', monospace;
@@ -169,6 +293,8 @@
   .ficha.tr { right: 5%; top: 5%; }
   .ficha.bl { left: 5%;  bottom: 5%; }
   .ficha.br { right: 5%; bottom: 5%; }
+  /* Modificador: ficha mais larga (texto cabe em menos linhas) */
+  .ficha.wide { width: 42%; }
 
   .ficha .stamp {
     font-family: 'Special Elite', monospace;
@@ -200,6 +326,33 @@
     bottom: 5%;
     text-align: center;
   }
+  .ficha.bottom-strip.align-r { text-align: right; }
+  .ficha.bottom-strip.align-l { text-align: left; }
+  /* Bottom-strip ocupando só a METADE DIREITA (não invade ilustração à esquerda) */
+  .ficha.bottom-strip.right-half {
+    left: 50%; right: 5%; width: auto;
+  }
+  /* idem, metade esquerda */
+  .ficha.bottom-strip.left-half {
+    left: 5%; right: 50%; width: auto;
+  }
+  /* dois terços direitos (mais largo — texto em 2 linhas) */
+  .ficha.bottom-strip.right-wide {
+    left: 30%; right: 5%; width: auto;
+  }
+  /* Centrado mas mais estreito (40% width) */
+  .ficha.bottom-strip.narrow {
+    left: 30%; right: 30%; width: auto;
+  }
+  /* BG translúcido creme atrás do texto — pra páginas com fundo escuro */
+  .ficha.bottom-strip.bg .body {
+    display: inline;
+    background: rgba(244, 237, 224, .85);
+    padding: 6px 14px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    line-height: 2;
+  }
   .ficha.top-strip {
     width: 70%;
     left: 15%; right: 15%;
@@ -223,6 +376,22 @@
   .quote.bc { left: 12%; right: 12%; bottom: 5%; }
   .quote.bl { left: 4%;  right: 52%; bottom: 5%; }
   .quote.br { left: 52%; right: 4%;  bottom: 5%; }
+  .quote.tr { left: 52%; right: 4%;  top: 5%; }
+  .quote.tl { left: 4%;  right: 52%; top: 5%; }
+  /* BG translúcido creme atrás do quote — apenas envolve as palavras, não a faixa toda */
+  .quote.bg {
+    background: transparent;
+  }
+  .quote.bg span.txt {
+    background: rgba(244, 237, 224, .85);
+    padding: 4px 12px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    line-height: 2;
+  }
+  .quote.bg::before {
+    background: transparent;
+  }
   .quote::before {
     content: '';
     display: block;
@@ -295,6 +464,9 @@
     <h2>and the Big Machines</h2>
   </div>
   <div class="meta">cover + 30 pages · variant E · rotating palettes · chronological</div>
+  <div class="pdf-link">
+    <a href="./handy-andy.pdf" target="_blank">📕 download PDF (280×187mm · print-ready)</a>
+  </div>
 </header>
 
 <!-- CAPA -->
@@ -302,7 +474,7 @@
   <div class="capa-card">
     <div class="tag-cover">COVER · vol. I</div>
     <div class="page capa">
-      <img class="art" src="../imagens/tritone-cover-chibi/sepia/capa-chibi-v1.png" alt="capa">
+      <img class="art" src="../imagens/tritone-cover-chibi/sepia/capa-chibi-livro.png" alt="capa">
       <div class="cover-text">
         <div class="cover-eyebrow">VOL. I</div>
         <h1 class="cover-title">HANDY ANDY</h1>
@@ -316,6 +488,23 @@
   <!-- preenchido por JS -->
 </main>
 
+<!-- CONTRACAPA -->
+<section class="capa-wrap">
+  <div class="capa-card">
+    <div class="tag-cover">BACK COVER · vol. I</div>
+    <div class="page contracapa">
+      <div class="about">
+        <div class="label">ABOUT HANDY ANDY</div>
+        <h2>The kid who reads engineering books</h2>
+        <p class="lead">Andy isn't a mechanic. He's a kid who likes engineering books.</p>
+        <p>Every night before bed, he opens one and finds a machine he's never seen before. He likes the cutaway drawings best — the ones that show you what's inside. Where the fire happens. Why the wheels turn.</p>
+        <p>This book is his collection. Every machine he's met so far, in the order he met them. From the first steam engines to the bullet train that hadn't even been built yet when his first book was printed.</p>
+        <div class="closing">FOR KIDS WHO WANT TO KNOW HOW THINGS WORK</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <h3>THE END</h3>
   ENGY · BOOK COMPLETE · 2026
@@ -328,7 +517,6 @@ const PALETTES = ['olive', 'sepia', 'vivid', 'duotone-cool'];
 // Páginas onde o Andy aparece — usa tritone-andy-scene em vez de tritone-breathe
 const ANDY_PAGES = new Set([
   'caminhao-02',
-  'moto-04',
   'bombeiro-cut',
   'motor-v8-cut',
 ]);
@@ -337,24 +525,36 @@ const ANDY_PAGES = new Set([
 const CONFIG = {
   'aviao-turbina':  { isDuo: true, fichaPos: 'tr', dir: 'tritone-duo' },
   'trator-cuts':    { isDuo: true, fichaPos: 'tl', dir: 'tritone-duo' },
-  'trator-engine':  { isDuo: true, dir: 'tritone-duo', splitTopBottom: true },
+  'trator-engine':  { isDuo: true, dir: 'tritone-duo', splitTopBottom: true, bodyAlign: 'r', bodyHalf: 'right-wide' },
+  // bodyHalf accepts: 'right-half' | 'left-half' | 'right-wide'
   'trem-vapor':     { dir: 'tritone-trem' },
-  'trem-moderno':   { dir: 'tritone-trem' },
+  'trem-moderno':   { dir: 'tritone-japao', quoteBg: true },
   'trem-corte':     { dir: 'tritone-trem', splitTopBottom: true },
-  'andy-fim':       { dir: 'tritone-trem', fichaPos: 'tl', isFinal: true },
+  'andy-fim':       { dir: 'tritone-trem', fichaPos: 'tr', isFinal: true },
   'caminhao-02':    { fichaPos: 'tr' },
+  'guindaste-01':   { dir: 'tritone-mina' },
+  'aviao-12':       { dir: 'tritone-ceu' },
+  'policia-07':     { dir: 'tritone-cidade80', splitTopBottom: true, bodyBg: true },
+  'bombeiro2-02':   { dir: 'tritone-urss' },
+  'aviao-02':       { dir: 'tritone-pista' },
+  'moto-14':        { dir: 'tritone-route66', splitTopBottom: true, bodyHalf: 'left-half', bodyBg: true },
+  'caminhao-11':    { dir: 'tritone-urss-rural' },
+  'trem-cr450':     { quotePos: 'tr' },
+  'guindaste-02':   { dir: 'tritone-alemanha', fichaPos: 'tr' },
 };
 
 // Categoria por id (derivada do prefixo). pages.json não tem `cat`.
 const CAT_BY_ID = {
   'aviao-turbina': 'PLANES · CUTAWAY',
-  'aviao-08':      'HELICOPTERS',
+  'aviao-08':      'HELICOPTERS · CUTAWAY',
   'trator-cuts':   'TRACTORS · CUTAWAY',
   'trator-engine': 'TRACTORS · CUTAWAY',
   'bombeiro-cut':  'FIRE TRUCKS · CUTAWAY',
   'motor-v8-cut':  'ENGINES · CUTAWAY',
   'caminhao-17':   'EXCAVATORS',
   'andy-fim':      'FAREWELL',
+  'fusca-01':      'CARS',
+  'onibus-01':     'BUSES',
 };
 function catFor(id) {
   if (CAT_BY_ID[id]) return CAT_BY_ID[id];
@@ -463,6 +663,9 @@ function render(pages) {
     const andyTag = ANDY_PAGES.has(p.id) ? ' · 👦 with Andy' : '';
     const duoTag = p.isDuo ? ' · 🔬 duo-merge' : '';
     let fichaHTML;
+    const bodyAlign = p.bodyAlign ? ` align-${p.bodyAlign}` : '';
+    const bodyHalf = p.bodyHalf ? ` ${p.bodyHalf}` : '';
+    const bodyBg = p.bodyBg ? ' bg' : '';
     if (p.splitTopBottom) {
       fichaHTML = `
         <div class="ficha top-strip">
@@ -470,11 +673,11 @@ function render(pages) {
           <h3>${p.title}</h3>
           <div class="sub">${p.sub}</div>
         </div>
-        <div class="ficha bottom-strip"><div class="body">${p.body}</div></div>`;
+        <div class="ficha bottom-strip${bodyAlign}${bodyHalf}${bodyBg}"><div class="body">${p.body}</div></div>`;
     } else if (p.bodyOnly) {
-      fichaHTML = `<div class="ficha bottom-strip"><div class="body">${p.body}</div></div>`;
+      fichaHTML = `<div class="ficha bottom-strip${bodyAlign}${bodyHalf}${bodyBg}"><div class="body">${p.body}</div></div>`;
     } else {
-      const cls = `${p.fichaPos || 'tl'}${p.fichaCompact ? ' compact' : ''}${p.fichaExtra ? ' ' + p.fichaExtra : ''}`;
+      const cls = `${p.fichaPos || 'tl'}${p.fichaCompact ? ' compact' : ''}${p.fichaExtra ? ' ' + p.fichaExtra : ''}${p.fichaWide ? ' wide' : ''}`;
       fichaHTML = `
         <div class="ficha ${cls}">
           <div class="stamp">№ ${num} · ${p.cat}</div>
@@ -488,11 +691,16 @@ function render(pages) {
       <div class="page">
         <img class="art" src="../imagens/${dir}/${palette}/${p.id}.png" alt="${p.id}" loading="lazy">${''}
         ${fichaHTML}
-        ${p.quote && !p.bodyOnly && !p.splitTopBottom ? `<div class="quote bc">${p.quote}</div>` : ''}
+        ${p.quote && !p.bodyOnly && !p.splitTopBottom ? `<div class="quote ${p.quotePos || 'bc'}${p.quoteBg ? ' bg' : ''}">${p.quoteBg ? `<span class="txt">${p.quote}</span>` : p.quote}</div>` : ''}
       </div>
     `;
     main.appendChild(article);
   });
+}
+
+// Print mode: ?print na URL ativa CSS de impressão
+if (new URLSearchParams(location.search).has('print')) {
+  document.body.classList.add('print');
 }
 
 // Carrega pages.json e renderiza
