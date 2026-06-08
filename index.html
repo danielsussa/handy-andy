@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Handy Andy and the Big Machines · 34 páginas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #0f0e0c;
+    --canvas-2: #1a1815;
+    --text: #f4ede0;
+    --muted: #8a8377;
+    --accent: #d8c89a;
+    --rule: #2a2620;
+    --ink: #0a0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  header.hero {
+    padding: 80px 6vw 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+  }
+  header.hero .eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; letter-spacing: 6px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 28px;
+  }
+  header.hero .title-stack { display: inline-block; text-align: left; }
+  header.hero h1 {
+    font-family: 'Special Elite', monospace;
+    font-weight: 400;
+    font-size: clamp(48px, 8vw, 110px);
+    line-height: .9;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+  header.hero h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(24px, 3.5vw, 44px);
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+  header.hero .meta {
+    margin-top: 36px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    color: var(--muted);
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4vw 100px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  /* CAPA */
+  .capa-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 4vw 80px;
+  }
+  .capa-card { display: grid; gap: 14px; }
+  .tag-cover {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .page.capa {
+    aspect-ratio: 1536 / 1024;  /* mesma proporção do livro */
+    width: 100%;
+  }
+  .page.capa .cover-text {
+    position: absolute;
+    top: 50%;
+    left: 6%;
+    right: 50%;
+    transform: translateY(-50%);
+    text-align: left;
+    color: #1a1a1a;
+  }
+  .page.capa .cover-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 6px;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  .page.capa .cover-sub { margin-top: 10px; }
+  .page.capa .cover-title {
+    font-family: 'Special Elite', monospace;
+    font-size: clamp(28px, 5.5vw, 56px);
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .page.capa .cover-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(14px, 2.4vw, 22px);
+    line-height: 1.15;
+    color: #333;
+  }
+  .page.capa .cover-sub strong {
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .card { display: grid; gap: 14px; }
+  .card .tag {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  /* PÁGINA landscape 1.5:1 */
+  .page {
+    position: relative;
+    background: var(--canvas-2);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.04),
+      0 30px 60px -20px rgba(0,0,0,.6),
+      0 14px 30px -10px rgba(0,0,0,.5);
+    color: var(--ink);
+    aspect-ratio: 1536 / 1024;
+    width: 100%;
+  }
+  .page img.art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ficha {
+    position: absolute;
+    width: 38%;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+  }
+  .ficha.tl { left: 5%;  top: 6%; }
+  .ficha.tr { right: 5%; top: 6%; }
+  .ficha.bl { left: 5%;  bottom: 6%; }
+  .ficha.br { right: 5%; bottom: 6%; }
+
+  .ficha .stamp {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    color: #444; margin-bottom: 10px;
+  }
+  .ficha h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700; font-size: 26px;
+    text-transform: uppercase; letter-spacing: 1px;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .ficha .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 14px;
+    color: #333; margin-bottom: 14px;
+  }
+  .ficha .body {
+    font-size: 12px; line-height: 1.55;
+    font-weight: 500;
+  }
+  .ficha .body strong { font-weight: 700; }
+
+  /* Variante compact — ficha menor pra páginas onde o veículo é grande/dominante */
+  .ficha.compact { width: 28%; }
+  .ficha.compact .stamp { font-size: 9px; letter-spacing: 2px; margin-bottom: 6px; }
+  .ficha.compact h3 { font-size: 20px; letter-spacing: .8px; }
+  .ficha.compact .sub { font-size: 12px; margin-bottom: 10px; }
+  .ficha.compact .body { font-size: 10.5px; line-height: 1.5; }
+
+  .quote {
+    position: absolute;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #1a1a1a;
+  }
+  .quote.bc { left: 12%; right: 12%; bottom: 5%; }
+  .quote.bl { left: 4%;  right: 52%; bottom: 5%; }
+  .quote.br { left: 52%; right: 4%;  bottom: 5%; }
+  .quote::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: rgba(0,0,0,.4);
+    margin: 0 auto 10px;
+  }
+
+  /* === DUO SPLIT — duas imagens lado a lado, sem moldura === */
+  .page.duo-split img.art {
+    /* esconde a imagem principal (vamos usar art-left e art-right) */
+    display: none;
+  }
+  .page.duo-split .splits {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .page.duo-split .splits img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .page.duo-split .callout-line {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .page.duo-split .callout-line svg { width: 100%; height: 100%; }
+  .page.duo-split .callout-line .lead {
+    fill: none;
+    stroke: #1a1a1a;
+    stroke-width: 1.6;
+    stroke-dasharray: 6 4;
+  }
+  .page.duo-split .callout-line .ring {
+    fill: none;
+    stroke: #1a1a1a;
+    stroke-width: 2;
+    stroke-dasharray: 4 4;
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 60px 4vw;
+    text-align: center; color: var(--muted);
+    font-size: 13px;
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 3px;
+  }
+  footer h3 {
+    font-family: 'Special Elite', monospace;
+    font-size: 20px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">vol. I</div>
+  <div class="title-stack">
+    <h1>HANDY ANDY</h1>
+    <h2>and the Big Machines</h2>
+  </div>
+  <div class="meta">cover + 30 pages · variant E · rotating palettes · chronological</div>
+</header>
+
+<!-- CAPA -->
+<section class="capa-wrap">
+  <div class="capa-card">
+    <div class="tag-cover">CAPA · vol. I</div>
+    <div class="page capa">
+      <img class="art" src="imagens/tritone-cover-chibi/sepia/capa-chibi-v1.png" alt="capa">
+      <div class="cover-text">
+        <div class="cover-eyebrow">VOL. I</div>
+        <h1 class="cover-title">HANDY ANDY</h1>
+        <h2 class="cover-sub"><em>and the</em><br><strong>BIG MACHINES</strong></h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="livro">
+  <!-- preenchido por JS -->
+</main>
+
+<footer>
+  <h3>FIM</h3>
+  ENGY · LIVRO COMPLETO · 2026
+</footer>
+
+<script>
+// Cada página: id da imagem (sem .png), paleta, ficha (categoria, título, sub, body),
+// quote opcional, posição da ficha (tl/tr/bl/br) e do quote (bc/bl/br)
+const PALETTES = ['olive', 'sepia', 'vivid', 'duotone-cool'];
+// Páginas onde o Andy aparece — usa tritone-andy-scene em vez de tritone-breathe
+const ANDY_PAGES = new Set([
+  // 'trator-01',  // removido — usuário não gostou do Andy escalando o pneu
+  'caminhao-02',
+  'moto-04',
+  'aviao-cut-turbina',
+  'bombeiro-cut',
+  // 'escavadeira',  // removido — Andy ficou estranho na cabine
+  'motor-v8-cut',
+]);
+
+const PAGES = [
+  // TANQUES
+  { id: 'tanque-02', cat: 'BLINDADOS',  title: 'Tanque T-34',        sub: 'União Soviética · 1940',
+    body: 'Mais de <strong>80 mil unidades</strong> produzidas. Armadura inclinada e esteira larga — difícil de acertar e bom em lama, neve e areia.',
+    quote: 'Atravessava lama, neve e areia<br>onde nenhum outro tanque passava.' },
+  { id: 'tanque-06', cat: 'BLINDADOS',  title: 'Tanque pesado',      sub: '[modelo] · [ano]',
+    body: 'Placeholder — texto será preenchido com GPT-4 depois da revisão final.' },
+
+  // CAMINHÕES
+  { id: 'caminhao-02', cat: 'CAMINHÕES', title: 'Dodge Power Wagon', sub: 'Estados Unidos · 1946',
+    body: 'Caminhão militar reaproveitado pra civil depois da Segunda Guerra. Robusto e simples — virou ícone do "qualquer terreno, qualquer carga".',
+    quote: 'Veio da guerra,<br>virou companheiro de fazenda.', fichaPos: 'tr' },
+  { id: 'caminhao-11', cat: 'CAMINHÕES', title: 'ZIL',                sub: 'URSS · [ano]',
+    body: 'Placeholder.' },
+  { id: 'caminhao-14', cat: 'CAMINHÕES', title: 'Chevy',              sub: 'Estados Unidos · [ano]',
+    body: 'Placeholder.' },
+  { id: 'caminhao-21', cat: 'CAMINHÕES', title: 'Silverado',          sub: 'Estados Unidos · [ano]',
+    body: 'Placeholder.' },
+
+  // MOTOS
+  { id: 'moto-04',   cat: 'MOTOS',      title: 'Café Racer',        sub: '[país] · [ano]',
+    body: 'Placeholder.' },
+  { id: 'moto-14',   cat: 'MOTOS',      title: 'Harley custom',     sub: 'EUA · [ano]',
+    body: 'Placeholder.' },
+  { id: 'moto-17',   cat: 'MOTOS',      title: 'Harley Road King',  sub: 'EUA · [ano]',
+    body: 'Placeholder.' },
+
+  // AVIÕES
+  { id: 'aviao-turbina', cat: 'AVIÕES · CORTE', title: 'Airbus A320 e sua turbina', sub: 'Europa · 1988',
+    body: 'Cada asa carrega uma turbina como esta — milhares de pás giram em alta velocidade, queimando ar e combustível pra empurrar o avião pra frente.',
+    isDuo: true, fichaPos: 'tr' },
+  { id: 'aviao-02',  cat: 'AVIÕES',     title: 'Cessna 172',         sub: 'Estados Unidos · 1956',
+    body: 'O avião mais ensinado do mundo. Cabine pra quatro, asa alta, decola curtinho — onde tem pista de terra, tem Cessna 172.' },
+  { id: 'aviao-05',  cat: 'AVIÕES',     title: 'Focke-Wulf Fw 190', sub: 'Alemanha · 1941',
+    body: 'Placeholder.' },
+  { id: 'aviao-08',  cat: 'AVIÕES',     title: 'Helicóptero',       sub: '[modelo] · [ano]',
+    body: 'Placeholder.' },
+  { id: 'aviao-12',  cat: 'AVIÕES',     title: 'Boeing 747',        sub: 'Estados Unidos · 1969',
+    body: 'Placeholder.' },
+
+  // TRATORES
+  { id: 'trator-01', cat: 'TRATORES',   title: 'Trator T-150',      sub: 'União Soviética · 1976',
+    body: 'Trator pesado fabricado em Kharkov. Articulação no meio, tração nas quatro rodas grandes — arava em qualquer lugar.' },
+  { id: 'trator-cuts', cat: 'TRATORES · CORTE', title: 'Trator por dentro', sub: 'dois jeitos de mostrar',
+    body: 'Aqui o trator inteiro com pedaços abertos pra ver o que tem dentro. Ali ao lado, as mesmas peças voando, separadas no ar.',
+    isDuo: true, fichaPos: 'tl', fichaCompact: true },
+  { id: 'trator-engine', cat: 'TRATORES · CORTE', title: 'Trator e seu motor', sub: '[modelo] · [ano]',
+    body: 'Pistões sobem e descem queimando combustível — o eixo gira, as rodas rodam.',
+    isDuo: true, fichaPos: 'tr', fichaCompact: true },
+
+  // BOMBEIROS
+  { id: 'bombeiro-cut', cat: 'BOMBEIROS · CORTE', title: 'Caminhão de bombeiro', sub: 'corte Stephen Biesty',
+    body: 'Cada compartimento do caminhão — escada, cabine, tanque de água, motor, bombeiros se equipando. Tudo em uma única ilustração.' },
+  { id: 'bombeiro2-02', cat: 'BOMBEIROS', title: 'Ural', sub: 'URSS · 1986 · Pripyat',
+    body: 'Caminhão usado em Pripyat na noite de Chernobyl. Robustíssimo, simples, virou símbolo daquela noite.' },
+
+  // POLÍCIA
+  { id: 'policia-07', cat: 'POLÍCIA', title: 'Dodge Diplomat', sub: 'Estados Unidos · anos 80',
+    body: 'Sedan de polícia clássico americano dos anos 80 — V8 grande, suspensão reforçada, gigante.' },
+
+  // GUINDASTES
+  { id: 'guindaste-01', cat: 'GUINDASTES', title: 'Titanus V-Max', sub: '[país] · [ano]',
+    body: 'Guindaste gigante de obra. Placeholder.' },
+  { id: 'guindaste-02', cat: 'GUINDASTES', title: 'Guindaste 3D',  sub: '[modelo] · [ano]',
+    body: 'Placeholder.' },
+
+  // ESCAVADEIRAS
+  { id: 'escavadeira',  cat: 'ESCAVADEIRAS', title: 'Escavadeira', sub: '[modelo] · [ano]',
+    body: 'Sketch a lápis branco/preto. Placeholder.' },
+  { id: 'caminhao-17',  cat: 'ESCAVADEIRAS', title: 'Escavadeira', sub: '[modelo] · [ano]',
+    body: 'Placeholder — estava na pasta de caminhões mas é escavadeira.' },
+
+  // MOTOR V8
+  { id: 'motor-v8-cut', cat: 'MOTOR · CORTE', title: 'Motor V8', sub: 'blueprint vintage',
+    body: 'Por dentro de um V8 — pistões, virabrequim, válvulas. Como gasolina vira movimento.' },
+];
+
+function render() {
+  const main = document.getElementById('livro');
+  PAGES.forEach((p, i) => {
+    const palette = PALETTES[i % PALETTES.length];
+    const num = String(i + 1).padStart(2, '0');
+    const article = document.createElement('article');
+    article.className = 'card';
+    let dir = ANDY_PAGES.has(p.id) ? 'tritone-andy-scene' : 'tritone-breathe';
+    if (p.isDuo) dir = 'tritone-duo';
+    const andyTag = ANDY_PAGES.has(p.id) ? ' · 👦 com Andy' : '';
+    const duoTag = p.isDuo ? ' · 🔬 duo-merge' : '';
+    article.innerHTML = `
+      <div class="tag">${num} · ${p.cat.toLowerCase()} · paleta ${palette}${andyTag}${duoTag}</div>
+      <div class="page">
+        <img class="art" src="imagens/${dir}/${palette}/${p.id}.png" alt="${p.id}" loading="lazy">${''}
+        <div class="ficha ${p.fichaPos || 'tl'}${p.fichaCompact ? ' compact' : ''}">
+          <div class="stamp">№ ${num} · ${p.cat}</div>
+          <h3>${p.title}</h3>
+          <div class="sub">${p.sub}</div>
+          <div class="body">${p.body}</div>
+        </div>
+        ${p.quote ? `<div class="quote bc">${p.quote}</div>` : ''}
+      </div>
+    `;
+    main.appendChild(article);
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>
