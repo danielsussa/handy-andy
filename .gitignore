@@ -1,0 +1,11 @@
+.venv/
+.tmp_outpaint/
+.env
+.decky/
+.DS_Store
+__pycache__/
+*.pyc
+
+# imagens grandes (3GB) — apenas o subset usado em livro/livro-completo.html
+# fica versionado (já está em HEAD). Novas pastas em imagens/ não entram automaticamente.
+imagens/

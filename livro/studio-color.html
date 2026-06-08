@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Engy · Comparação de cor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #0f0e0c;
+    --canvas-2: #1a1815;
+    --text: #f4ede0;
+    --muted: #8a8377;
+    --accent: #d8c89a;
+    --rule: #2a2620;
+    --ink: #0a0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  header.hero {
+    padding: 70px 6vw 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  header.hero .eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 18px;
+  }
+  header.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1.02; letter-spacing: -.5px;
+    margin-bottom: 14px;
+  }
+  header.hero h1 em { font-style: italic; color: var(--accent); }
+  header.hero p.lede {
+    font-size: 17px; color: var(--muted);
+    max-width: 65ch;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 4vw 100px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 70px;
+  }
+
+  .card { display: grid; gap: 16px; }
+  .card .tag {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 30px;
+    line-height: 1.1;
+  }
+  .card .desc {
+    color: var(--muted); font-size: 14.5px;
+    max-width: 75ch;
+  }
+  .card .desc strong { color: var(--text); }
+  .card .desc code {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; color: var(--accent);
+    background: rgba(216,200,154,.08);
+    padding: 1px 5px;
+  }
+
+  .frame {
+    position: relative;
+    aspect-ratio: 1536 / 1024;
+    width: 100%;
+    background: var(--canvas-2);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.04),
+      0 30px 60px -20px rgba(0,0,0,.6);
+  }
+  .frame img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* === Modo 1 — original puro grayscale === */
+  .frame.m1 img { /* sem filtro */ }
+
+  /* === Modo 2 — sépia via CSS === */
+  .frame.m2 img {
+    filter: sepia(.75) contrast(1.05) brightness(.98) saturate(1.15);
+  }
+
+  /* === Modo 3 — AI vintage só (re-gerado, traço pode ter mudado) === */
+  .frame.m3 img { /* sem filtro, é o AI output puro */ }
+
+  /* === Modo 4 — AI vintage + overlay original em multiply (hybrid) === */
+  .frame.m4 .ink {
+    mix-blend-mode: multiply;
+    opacity: 1;
+    filter: contrast(1.06);
+  }
+  /* === Modo 5 — mesmo do 4 mas com vintage upscalada (resolução igual ao original) === */
+  .frame.m5 .ink {
+    mix-blend-mode: multiply;
+    opacity: 1;
+    filter: contrast(1.06);
+  }
+  /* === Modos 6/7/8 — blur de cor + overlay original (ideia do Daniel) === */
+  .frame.m6 .ink, .frame.m7 .ink, .frame.m8 .ink {
+    mix-blend-mode: multiply;
+    opacity: 1;
+    filter: contrast(1.06);
+  }
+  /* === Modo 9 — vintage AI ALINHADA (SIFT + homography) + overlay === */
+  .frame.m9 .ink {
+    mix-blend-mode: multiply;
+    opacity: 1;
+    filter: contrast(1.06);
+  }
+  /* === Modo 10 — color-only AI (sem linhas desde o início) + overlay original === */
+  .frame.m10 .ink {
+    mix-blend-mode: multiply;
+    opacity: 1;
+    filter: contrast(1.06);
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 4vw;
+    text-align: center; color: var(--muted);
+    font-size: 13px;
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Engy · livro do gui · comparação de cor</div>
+  <h1>4 modos de <em>cor</em>,<br>mesmo tanque</h1>
+  <p class="lede">
+    Pergunta: dá pra colorir vintage sem perder o traço de lápis? Comparativo direto: original cinza, sépia via CSS (atual), AI vintage puro (re-renderiza), e a versão híbrida (AI por baixo + original por cima em <code>mix-blend-mode: multiply</code>). O híbrido é onde o pulo do gato acontece.
+  </p>
+</header>
+
+<main>
+
+  <article class="card">
+    <div class="tag">Modo 1 · referência</div>
+    <h2>Original grayscale</h2>
+    <div class="desc">
+      A versão outpainted+upscaled, sem nenhum filtro. Esse é o <strong>traço de lápis original</strong> — tudo que viermos a perder, perdemos em relação a essa.
+    </div>
+    <div class="frame m1">
+      <img src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 2 · sépia CSS (atual)</div>
+    <h2>Sépia via CSS filter</h2>
+    <div class="desc">
+      Só um <code>filter: sepia(.75) contrast(1.05) brightness(.98) saturate(1.15)</code> no PNG original. <strong>Zero perda de detalhe</strong>, é o mesmo pixel só com tonalização. Mas é monocromático — não tem cores reais, só tom marrom uniforme.
+    </div>
+    <div class="frame m2">
+      <img src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 3 · AI vintage só</div>
+    <h2>AI colorize vintage, sem overlay</h2>
+    <div class="desc">
+      gpt-image-1 re-renderiza com prompt "vintage 1940s palette". Tem <strong>cor de verdade</strong> (olive drab no tanque, terra no chão, céu morno) mas o traço de lápis original muda — algumas linhas finas somem ou são reinterpretadas pela IA.
+    </div>
+    <div class="frame m3">
+      <img src="../imagens/vintage/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 4 · hybrid · com blur</div>
+    <h2>Hybrid v1 (vintage em 1536×1024, original em 3072×2048)</h2>
+    <div class="desc">
+      Primeira tentativa. A base de cor (AI) ficou em <strong>metade da resolução</strong> do overlay (original upscaled) → quando a base é "esticada" pra encaixar, fica borrada por baixo. Linhas do lápis ficam nítidas mas a cor parece um wash macio demais.
+    </div>
+    <div class="frame m4">
+      <img class="color" src="../imagens/vintage/tanque-02.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 5 · hybrid · corrigido</div>
+    <h2>Hybrid v2 (ambos em 3072×2048, overlay 100%)</h2>
+    <div class="desc">
+      <strong>O fix:</strong> upscalei a vintage da IA pro mesmo tamanho do original (real-ESRGAN 4x → downscale 2x). Subi overlay pra <code>opacity: 1</code> + <code>contrast(1.06)</code> no overlay pra reforçar o lápis. Resultado: linhas ainda mais sharp que o modo 4, cor mais densa.
+    </div>
+    <div class="frame m5">
+      <img class="color" src="../imagens/vintage-upscaled/tanque-02.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 6 · blur 20px + overlay (ideia Daniel)</div>
+    <h2>Blur leve da vintage + overlay original</h2>
+    <div class="desc">
+      <strong>A ideia:</strong> a vintage da IA com <code>GaussianBlur(20)</code> vira "regiões de cor" sem competir em detalhe. O overlay original em multiply traz 100% do traço de lápis. Blur leve preserva mais das cores específicas de cada região.
+    </div>
+    <div class="frame m6">
+      <img class="color" src="../imagens/vintage-blur/tanque-02_r20.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 7 · blur 50px + overlay</div>
+    <h2>Blur médio</h2>
+    <div class="desc">
+      <code>GaussianBlur(50)</code>. Cores começam a se misturar entre regiões — mais "wash" tipo aquarela. Linhas do lápis aparecem ainda mais limpas (sem competição com micro-detalhes da IA).
+    </div>
+    <div class="frame m7">
+      <img class="color" src="../imagens/vintage-blur/tanque-02_r50.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 8 · blur 100px + overlay</div>
+    <h2>Blur extremo — só manchas de cor</h2>
+    <div class="desc">
+      <code>GaussianBlur(100)</code>. Cores viram <strong>manchas amplas</strong>. O lápis do original domina, a cor é só atmosfera. Mais próximo de uma ilustração técnica vintage com leve tonalização.
+    </div>
+    <div class="frame m8">
+      <img class="color" src="../imagens/vintage-blur/tanque-02_r100.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 9 · vintage ALINHADA via SIFT + homography (Hybrid v3)</div>
+    <h2>Hybrid v3 — vintage forçada a encaixar nas linhas</h2>
+    <div class="desc">
+      <strong>OpenCV faz o serviço:</strong> SIFT detecta features comuns entre vintage e original, RANSAC computa a transformação que melhor alinha as duas, <code>warpPerspective</code> deforma a vintage pra "grudar" nas linhas do lápis. Em seguida o overlay multiply.
+      <br><br>
+      <strong>Resultado real desse alinhamento:</strong> 5000 features detectadas em cada, 39 matches bons (Lowe ratio 0.75), <strong>21 inliers</strong> no RANSAC — não é farto, indica que o AI mexeu mais do que uma transformação global pode corrigir. Mas as áreas dos inliers (tipicamente alinhamento do tanque) ficam melhor encaixadas que no modo 5.
+    </div>
+    <div class="frame m9">
+      <img class="color" src="../imagens/vintage-aligned/tanque-02.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 10 · color-only (sua ideia) — AI sem linhas + overlay original</div>
+    <h2>Hybrid v4 — AI gerou só cor, sem linha, sem detalhe</h2>
+    <div class="desc">
+      <strong>Sua ideia implementada:</strong> prompt explícito pra AI gerar SÓ regiões de cor — proibido linhas, hatching, contornos, texturas de lápis. A base vira quase uma aquarela chapada com paleta vintage 1940. Em cima, o original grayscale em multiply traz 100% das linhas.
+      <br><br>
+      <strong>Limitação descoberta:</strong> o AI ainda redesenhou o tanque numa proporção ligeiramente diferente → "fantasma" visível no overlay.
+    </div>
+    <div class="frame m10">
+      <img class="color" src="../imagens/color-only-upscaled/tanque-02.png" alt="">
+      <img class="ink" src="../imagens/upscaled-landscape/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 11 · tritone — paleta OLIVE (sem AI, alinhamento perfeito)</div>
+    <h2>Tritone — cor derivada do próprio original</h2>
+    <div class="desc">
+      <strong>Mudança de paradigma:</strong> em vez de gerar cor com AI e tentar alinhar, eu <strong>mapeio cada nível de cinza do original pra uma cor da paleta vintage</strong>. Áreas escuras (linhas do tanque) viram olive drab profundo. Mid-tons (chão) viram olive-tan. Áreas claras (céu, papel) viram creme.
+      <br><br>
+      <strong>Como a cor é derivada do próprio pixel</strong>, é fisicamente impossível ter desalinhamento. É literalmente a versão tonalizada do PNG original. Sem AI, sem custo de chamada, sem fantasma.
+    </div>
+    <div class="frame m1">
+      <img src="../imagens/tritone/olive/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 12 · tritone — paleta SEPIA</div>
+    <h2>Tritone sépia — mais marrom, livro velho</h2>
+    <div class="desc">
+      Mesma técnica, paleta mais quente e marrom. Vibe enciclopédia ilustrada de 1930.
+    </div>
+    <div class="frame m1">
+      <img src="../imagens/tritone/sepia/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 13 · tritone — paleta VIVID</div>
+    <h2>Tritone vivid — mais saturado, pôster de guerra</h2>
+    <div class="desc">
+      Mais saturação no mid-tom, fica com cara de pôster ilustrado dos anos 40 ou capa de revista pulp.
+    </div>
+    <div class="frame m1">
+      <img src="../imagens/tritone/vivid/tanque-02.png" alt="">
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">Modo 14 · tritone — paleta COOL (azul-acinzentado)</div>
+    <h2>Tritone cool — frio com warmth no claro</h2>
+    <div class="desc">
+      Sombras azuladas-acinzentadas, claros quentes. Vibe blueprint vintage / cinema noir.
+    </div>
+    <div class="frame m1">
+      <img src="../imagens/tritone/duotone-cool/tanque-02.png" alt="">
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  ENGY · ESTÚDIO · COMPARAÇÃO DE COR · TANQUE-02 · 2026
+</footer>
+
+</body>
+</html>

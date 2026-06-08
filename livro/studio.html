@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Engy · Estúdio de layouts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #0f0e0c;
+    --canvas-2: #1a1815;
+    --text: #f4ede0;
+    --muted: #8a8377;
+    --accent: #d8c89a;
+    --rule: #2a2620;
+    --ink: #0a0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  /* HERO */
+  header.hero {
+    padding: 80px 6vw 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  header.hero .eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  header.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(48px, 7vw, 92px);
+    line-height: 1.02;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+  header.hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  header.hero p.lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+
+  /* GRID DE VARIANTES */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 4vw 100px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 80px;
+  }
+
+  section.variant {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    section.variant { grid-template-columns: 1fr; }
+  }
+
+  section.variant .meta {
+    position: sticky;
+    top: 40px;
+  }
+  section.variant .label {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  section.variant h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  section.variant .desc {
+    color: var(--muted);
+    font-size: 14.5px;
+  }
+  section.variant .desc ul {
+    margin-top: 10px;
+    padding-left: 18px;
+  }
+  section.variant .desc li { margin-bottom: 4px; }
+
+  /* PÁGINA (mockup) — comum a todas variantes */
+  .page {
+    position: relative;
+    background: var(--canvas-2);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.04),
+      0 30px 60px -20px rgba(0,0,0,.6),
+      0 14px 30px -10px rgba(0,0,0,.5);
+    color: var(--ink);
+  }
+  .page.portrait { aspect-ratio: 210 / 297; max-width: 560px; }
+  .page.square   { aspect-ratio: 1 / 1;     max-width: 600px; }
+
+  .page img.art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* CAIXAS tipográficas no estilo do mockup do usuário */
+  .box {
+    background: rgba(252, 247, 234, .94);
+    border: 1.5px solid var(--ink);
+    padding: 10px 16px;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+  }
+  .box.title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 10px 22px;
+  }
+  .box.desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #333;
+    padding: 10px 16px;
+  }
+  .box.story {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    line-height: 1.55;
+    padding: 14px 18px;
+  }
+
+  /* === VARIANTE A — portrait, caixas estilo manual (réplica do seu mockup) === */
+  .v-a .box.title { position: absolute; top: 5%;  left: 5%; }
+  .v-a .box.desc  { position: absolute; top: 14%; left: 5%; right: 5%; }
+  .v-a .box.story { position: absolute; bottom: 4%; left: 5%; right: 5%; text-align: center; }
+
+  /* === VARIANTE B — portrait, caixas dispostas em coluna esquerda (museu) === */
+  .v-b .box.title { position: absolute; top: 6%; left: 5%; }
+  .v-b .box.desc  { position: absolute; top: 14%; left: 5%; max-width: 45%; }
+  .v-b .box.story { position: absolute; bottom: 5%; left: 5%; max-width: 55%; }
+
+  /* === VARIANTE C — square, mesmo conceito do (A) === */
+  .v-c .box.title { position: absolute; top: 5%;  left: 5%; }
+  .v-c .box.desc  { position: absolute; top: 16%; left: 5%; right: 5%; }
+  .v-c .box.story { position: absolute; bottom: 5%; left: 5%; right: 5%; text-align: center; }
+
+  /* === VARIANTE D — square, título grande sobre faixa (estilo cartaz) === */
+  .v-d .title-banner {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 14px 22px;
+    background: rgba(252,247,234,.88);
+    border-bottom: 1.5px solid var(--ink);
+    display: flex; align-items: baseline; gap: 14px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .v-d .title-banner .num {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 3px; color: #555;
+  }
+  .v-d .title-banner h3 {
+    font-weight: 700; font-size: 22px; letter-spacing: 1.5px;
+    text-transform: uppercase; flex: 1;
+  }
+  .v-d .title-banner .sub {
+    font-style: italic; font-size: 13px; color: #555;
+  }
+  .v-d .footer-strip {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 14px 22px;
+    background: rgba(252,247,234,.88);
+    border-top: 1.5px solid var(--ink);
+    font-size: 12.5px; line-height: 1.55;
+    color: var(--ink);
+  }
+
+  /* === VARIANTE E — portrait, ficha técnica no canto superior direito === */
+  .v-e .ficha,
+  .v-f .ficha,
+  .v-g .ficha {
+    position: absolute;
+    width: 40%;
+    background: rgba(252,247,234,.94);
+    border: 1.5px solid var(--ink);
+    padding: 18px 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+  }
+  .v-e .ficha { left: 4%; top: 4%; width: 55%; }
+  .v-f .ficha { right: 4%; bottom: 4%; }
+  .v-g .ficha { left: 50%; top: 4%; right: 4%; width: auto; }
+
+  /* Quote solto na imagem — sem caixa, italic serif */
+  .v-e .quote {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 6%;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #1a1a1a;
+    /* halo branco sutil pra legibilidade quando o desenho atrás for médio */
+    text-shadow:
+      0 0 12px rgba(252,247,234,.9),
+      0 0 4px rgba(252,247,234,.95);
+  }
+  .v-e .quote::before,
+  .v-e .quote::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: rgba(0,0,0,.4);
+    margin: 10px auto;
+  }
+  .v-e .quote::before { margin-bottom: 14px; }
+  .v-e .quote::after  { margin-top: 14px; }
+  .v-e .ficha .stamp,
+  .v-f .ficha .stamp,
+  .v-g .ficha .stamp {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    color: #777; margin-bottom: 10px;
+  }
+  .v-e .ficha h3,
+  .v-f .ficha h3,
+  .v-g .ficha h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700; font-size: 26px;
+    text-transform: uppercase; letter-spacing: 1px;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .v-e .ficha .sub,
+  .v-f .ficha .sub,
+  .v-g .ficha .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 14px;
+    color: #555; margin-bottom: 14px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  .v-e .ficha .body,
+  .v-f .ficha .body,
+  .v-g .ficha .body {
+    font-size: 12px; line-height: 1.55;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 4vw;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Engy · livro do gui · estúdio de layout</div>
+  <h1>Catálogo <em>ilustrado</em><br>de máquinas</h1>
+  <p class="lede">
+    Cinco direções de layout pra livro full-bleed com a arte original do Pinterest + outpainting a lápis. Decida o formato (A4 portrait ou quadrado), a tipografia e a disposição das caixas tipográficas. Depois é só portar pro PDF da gráfica.
+  </p>
+</header>
+
+<main>
+
+  <!-- VARIANTE A — réplica do mockup do usuário -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">A · Portrait · Manual de campo</div>
+      <h2>Caixas flutuantes, layout do seu sketch</h2>
+      <div class="desc">
+        Réplica do seu rascunho: <strong>título no canto superior</strong>, descrição numa faixa logo abaixo, curiosidade num bloco no rodapé. Estilo "manual técnico" / "ficha de museu".
+        <ul>
+          <li>Arte full-bleed</li>
+          <li>Caixas com borda preta fina + interior creme translúcido</li>
+          <li>Texto contrasta sempre — independente da cor do desenho atrás</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page portrait v-a">
+      <img class="art" src="../imagens/upscaled/tanque-02.png" alt="">
+      <div class="box title">Tanque T-34</div>
+      <div class="box desc">União Soviética · 1940 · um dos blindados mais produzidos da história</div>
+      <div class="box story">
+        Mais de <strong>80 mil unidades</strong> saíram das fábricas soviéticas. Sua armadura inclinada e esteira larga o tornavam difícil de acertar e bom pra atravessar lama, neve e areia.
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIANTE B — portrait coluna esquerda -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">B · Portrait · Editorial</div>
+      <h2>Coluna lateral, mais respiração</h2>
+      <div class="desc">
+        Caixas alinhadas à esquerda, ocupando 45-55% da largura. A arte respira mais à direita.
+        <ul>
+          <li>Funciona quando o veículo está mais à direita na composição</li>
+          <li>Estilo "página de revista", menos cartaz</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page portrait v-b">
+      <img class="art" src="../imagens/upscaled/tanque-02.png" alt="">
+      <div class="box title">Tanque T-34</div>
+      <div class="box desc">União Soviética · 1940</div>
+      <div class="box story">
+        Mais de 80 mil unidades. Armadura inclinada, esteira larga — difícil de acertar e atravessava lama, neve e areia com facilidade.
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIANTE C — square -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">C · Square 1:1 · Manual</div>
+      <h2>Quadrado, mesmas caixas do (A)</h2>
+      <div class="desc">
+        Mesma proposta do A, formato quadrado. Comum em livros infantis premium (21×21 cm). Gráfica imprime em A4 ou A3 e corta — fica ~15-20% mais caro por causa do desperdício de papel.
+        <ul>
+          <li>Mais "objeto de design" que livro tradicional</li>
+          <li>Composição mais focada — sem trecho vertical extra de fundo</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page square v-c">
+      <img class="art" src="../imagens/outpainted-square/tanque-02.png" alt="">
+      <div class="box title">Tanque T-34</div>
+      <div class="box desc">União Soviética · 1940 · um dos blindados mais produzidos da história</div>
+      <div class="box story">
+        Mais de <strong>80 mil unidades</strong>. Armadura inclinada e esteira larga — difícil de acertar, bom em lama, neve e areia.
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIANTE D — square com faixas no topo/rodapé -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">D · Square 1:1 · Cartaz</div>
+      <h2>Faixas no topo e rodapé, estilo cartaz</h2>
+      <div class="desc">
+        Título numa <strong>faixa larga no topo</strong>, curiosidade num <strong>rodapé</strong>. Arte ocupa o miolo. Vibe "cartaz de cinema antigo" ou "selo de coleção".
+        <ul>
+          <li>Caixa de respiração — composição muito limpa</li>
+          <li>Numeração sutil em monospace</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page square v-d">
+      <img class="art" src="../imagens/outpainted-square/tanque-02.png" alt="">
+      <div class="title-banner">
+        <span class="num">№ 01</span>
+        <h3>Tanque T-34</h3>
+        <span class="sub">URSS · 1940</span>
+      </div>
+      <div class="footer-strip">
+        Mais de 80 mil unidades produzidas. Armadura inclinada e esteira larga — difícil de acertar, atravessava lama, neve e areia.
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIANTE E — ficha técnica lateral -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">E · Portrait · Ficha + quote</div>
+      <h2>Ficha topo-esquerdo + quote solta no rodapé</h2>
+      <div class="desc">
+        Ficha técnica ancorada no <strong>canto superior esquerdo</strong>, larga o suficiente pra não esbarrar na antena/canhão. Embaixo, uma <strong>frase solta na imagem</strong> (sem caixa) — vibe "epígrafe" / inscrição.
+        <ul>
+          <li>Top do desenho geralmente é céu = espaço seguro pro bloco</li>
+          <li>Quote em italic serif com halo branco sutil pra legibilidade</li>
+          <li>Filetes finos antes/depois do quote — toque editorial</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page portrait v-e">
+      <img class="art" src="../imagens/upscaled/tanque-02.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 01 · BLINDADOS</div>
+        <h3>Tanque T-34</h3>
+        <div class="sub">União Soviética · 1940</div>
+        <div class="body">
+          Mais de <strong>80 mil unidades</strong> produzidas. Sua armadura inclinada e a esteira larga o tornavam difícil de acertar e excelente pra atravessar lama, neve e areia.
+        </div>
+      </div>
+      <div class="quote">
+        Atravessava lama, neve e areia<br>onde nenhum outro tanque passava.
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIANTE F — ficha técnica no canto inferior direito -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">F · Portrait · Ficha embaixo</div>
+      <h2>Ficha no canto inferior direito</h2>
+      <div class="desc">
+        Mesma ficha, ancorada no canto de baixo. Funciona quando a parte de baixo do desenho é mais "vazia" (chão liso, sombra).
+        <ul>
+          <li>Tanque livre na metade superior</li>
+          <li>Sensação mais "rodapé editorial"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page portrait v-f">
+      <img class="art" src="../imagens/upscaled/tanque-02.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 01 · BLINDADOS</div>
+        <h3>Tanque T-34</h3>
+        <div class="sub">União Soviética · 1940</div>
+        <div class="body">
+          Mais de <strong>80 mil unidades</strong> produzidas. Armadura inclinada e esteira larga — difícil de acertar e bom em lama, neve e areia.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIANTE G — ficha técnica como faixa horizontal no topo -->
+  <section class="variant">
+    <div class="meta">
+      <div class="label">G · Portrait · Ficha em faixa</div>
+      <h2>Ficha como faixa horizontal no topo</h2>
+      <div class="desc">
+        Caixa larga ocupando metade direita do topo da página. Tanque fica totalmente livre do meio pra baixo.
+        <ul>
+          <li>Combo de "manual técnico" com mais espaço pro texto</li>
+          <li>Bom pra curiosidades mais longas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="page portrait v-g">
+      <img class="art" src="../imagens/upscaled/tanque-02.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 01 · BLINDADOS</div>
+        <h3>Tanque T-34</h3>
+        <div class="sub">União Soviética · 1940</div>
+        <div class="body">
+          Mais de <strong>80 mil unidades</strong> produzidas. Armadura inclinada e esteira larga — difícil de acertar e bom em lama, neve e areia.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  ENGY · ESTÚDIO · LIVRO DO GUI · 2026
+</footer>
+
+</body>
+</html>

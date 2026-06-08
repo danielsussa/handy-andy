@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Engy · Validação variante E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #0f0e0c;
+    --canvas-2: #1a1815;
+    --text: #f4ede0;
+    --muted: #8a8377;
+    --accent: #d8c89a;
+    --rule: #2a2620;
+    --ink: #0a0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  header.hero {
+    padding: 70px 6vw 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  header.hero .eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  header.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -.5px;
+    margin-bottom: 14px;
+  }
+  header.hero h1 em { font-style: italic; color: var(--accent); }
+  header.hero p.lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 65ch;
+  }
+
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 4vw 100px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px 50px;
+  }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; gap: 50px; } }
+
+  .card {
+    display: grid;
+    gap: 14px;
+  }
+  .card .tag {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* PÁGINA — variante E */
+  .page {
+    position: relative;
+    background: var(--canvas-2);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.04),
+      0 30px 60px -20px rgba(0,0,0,.6),
+      0 14px 30px -10px rgba(0,0,0,.5);
+    color: var(--ink);
+    aspect-ratio: 210 / 297;
+    width: 100%;
+  }
+  .page img.art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ficha {
+    position: absolute;
+    left: 4%; top: 4%;
+    width: 55%;
+    background: rgba(252,247,234,.94);
+    border: 1.5px solid var(--ink);
+    padding: 18px 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+  }
+  .ficha .stamp {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    color: #777; margin-bottom: 10px;
+  }
+  .ficha h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700; font-size: 26px;
+    text-transform: uppercase; letter-spacing: 1px;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .ficha .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 14px;
+    color: #555; margin-bottom: 14px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  .ficha .body {
+    font-size: 12px; line-height: 1.55;
+  }
+
+  .quote {
+    position: absolute;
+    left: 8%; right: 8%; bottom: 6%;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #1a1a1a;
+    text-shadow:
+      0 0 12px rgba(252,247,234,.9),
+      0 0 4px rgba(252,247,234,.95);
+  }
+  .quote::before, .quote::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: rgba(0,0,0,.4);
+    margin: 10px auto;
+  }
+  .quote::before { margin-bottom: 14px; }
+  .quote::after  { margin-top: 14px; }
+
+  /* Quote alt — pra imagens onde o rodapé é escuro/ocupado (fica branca, halo escuro) */
+  .quote.inverse {
+    color: #fafafa;
+    text-shadow:
+      0 0 14px rgba(0,0,0,.7),
+      0 1px 2px rgba(0,0,0,.55);
+  }
+  .quote.inverse::before, .quote.inverse::after {
+    background: rgba(255,255,255,.55);
+  }
+
+  /* Posicionamento alternativo da ficha (caso o veículo esteja muito à esquerda) */
+  .ficha.right { left: auto; right: 4%; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 4vw;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 2px;
+  }
+
+  .note {
+    margin-top: 24px;
+    padding: 20px 24px;
+    border: 1px dashed var(--rule);
+    background: rgba(216, 200, 154, .05);
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.55;
+    max-width: 700px;
+  }
+  .note strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Engy · livro do gui · validação E</div>
+  <h1>A <em>variante E</em>,<br>em 6 veículos diferentes</h1>
+  <p class="lede">
+    Mesma fórmula em todas: arte full-bleed + ficha técnica no canto superior esquerdo + quote solto no rodapé. Cada veículo é uma composição diferente — o objetivo é descobrir se o layout aguenta variações antes de gerar os 45 finais. Texto da ficha e do quote ainda são <strong>placeholders</strong> (não rodei GPT-4 pra os metadados verdadeiros).
+  </p>
+  <div class="note">
+    <strong>O que olhar:</strong> a ficha (canto superior esquerdo) tampa parte importante do veículo em alguma página? O quote no rodapé fica legível mesmo com chão "ocupado"? Algum veículo pediria ficha à direita (`.ficha.right`)?
+  </div>
+  <div class="switch" style="margin-top:28px;display:inline-flex;gap:14px;font-family:'Special Elite',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;">
+    <a href="studio-e.html" class="active" style="color:#0a0a0a;background:#d8c89a;border:1px solid #d8c89a;padding:8px 14px;text-decoration:none;">portrait A4</a>
+    <a href="studio-e-square.html" style="color:#8a8377;border:1px solid #2a2620;padding:8px 14px;text-decoration:none;">square 1:1</a>
+    <a href="studio-e-landscape.html" style="color:#8a8377;border:1px solid #2a2620;padding:8px 14px;text-decoration:none;">landscape 1.5:1</a>
+  </div>
+</header>
+
+<main>
+
+  <article class="card">
+    <div class="tag">01 · tanque (referência aprovada)</div>
+    <div class="page">
+      <img class="art" src="../imagens/upscaled/tanque-02.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 01 · BLINDADOS</div>
+        <h3>Tanque T-34</h3>
+        <div class="sub">União Soviética · 1940</div>
+        <div class="body">
+          Mais de <strong>80 mil unidades</strong> produzidas. Armadura inclinada e esteira larga — difícil de acertar e bom em lama, neve e areia.
+        </div>
+      </div>
+      <div class="quote">
+        Atravessava lama, neve e areia<br>onde nenhum outro tanque passava.
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">02 · tanque #2</div>
+    <div class="page">
+      <img class="art" src="../imagens/upscaled/tanque-04.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 02 · BLINDADOS</div>
+        <h3>Tanque Pesado</h3>
+        <div class="sub">[placeholder] · ano</div>
+        <div class="body">
+          Texto placeholder pra avaliar layout. Linha de exemplo um pouquinho mais longa pra ver como o bloco se comporta com mais conteúdo aqui dentro.
+        </div>
+      </div>
+      <div class="quote">
+        Quote placeholder pra validar legibilidade<br>e respiração no rodapé da página.
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">03 · caminhão</div>
+    <div class="page">
+      <img class="art" src="../imagens/upscaled/caminhao-02.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 03 · CAMINHÕES</div>
+        <h3>Dodge Power Wagon</h3>
+        <div class="sub">Estados Unidos · 1946</div>
+        <div class="body">
+          Caminhão militar reaproveitado pra civil depois da Segunda Guerra. Robusto, simples, virou ícone do "qualquer terreno, qualquer carga".
+        </div>
+      </div>
+      <div class="quote">
+        Veio da guerra,<br>virou companheiro de fazenda.
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">04 · moto</div>
+    <div class="page">
+      <img class="art" src="../imagens/upscaled/moto-01.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 04 · MOTOS</div>
+        <h3>Honda Africa Twin</h3>
+        <div class="sub">Japão · 1988</div>
+        <div class="body">
+          Inspirada nas motos do Rali Dakar. Feita pra cruzar deserto, asfalto, trilha — em qualquer ordem, no mesmo dia.
+        </div>
+      </div>
+      <div class="quote">
+        Feita pra cruzar o Saara<br>em duas rodas.
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">05 · avião</div>
+    <div class="page">
+      <img class="art" src="../imagens/upscaled/aviao-02.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 05 · AVIÕES</div>
+        <h3>Cessna 172</h3>
+        <div class="sub">Estados Unidos · 1956</div>
+        <div class="body">
+          O avião mais ensinado do mundo. Cabine pra quatro, asa alta, decola curtinho — onde tem pista de terra, tem Cessna 172 pousada.
+        </div>
+      </div>
+      <div class="quote">
+        Pequena, simples — e por isso<br>o avião mais ensinado do mundo.
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="tag">06 · trator (favorito do Daniel)</div>
+    <div class="page">
+      <img class="art" src="../imagens/upscaled/trator-01.png" alt="">
+      <div class="ficha">
+        <div class="stamp">№ 06 · TRATORES</div>
+        <h3>Trator T-150</h3>
+        <div class="sub">União Soviética · 1976</div>
+        <div class="body">
+          Trator pesado fabricado em Kharkov. Articulação no meio, tração nas quatro rodas grandes — arava em qualquer lugar.
+        </div>
+      </div>
+      <div class="quote">
+        Arava cinco mil hectares<br>na estepe russa sem pestanejar.
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  ENGY · ESTÚDIO · VALIDAÇÃO VARIANTE E · 2026
+</footer>
+
+</body>
+</html>

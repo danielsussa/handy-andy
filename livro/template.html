@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Livro do Gui</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --rule: #d9d4cb;
+    --paper: #fbf8f1;       /* off-white, tom de papel pólen */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #2a2a2a; }
+
+  /* Página A4 portrait — 210x297mm */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    background: var(--paper);
+    margin: 16mm auto;
+    padding: 18mm 18mm 16mm 18mm;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 8mm;
+    box-shadow: 0 6px 28px rgba(0,0,0,.35);
+    page-break-after: always;
+    overflow: hidden;
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  @page { size: A4; margin: 0; }
+  @media print {
+    html, body { background: transparent; }
+    .page { box-shadow: none; margin: 0; }
+  }
+
+  /* Imagem ocupa o bloco superior */
+  .frame {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+  }
+  .frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* sutil — tom de lápis em papel pólen */
+    mix-blend-mode: multiply;
+  }
+
+  /* Bloco de texto */
+  .meta {
+    border-top: 1px solid var(--rule);
+    padding-top: 6mm;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 8mm;
+    row-gap: 2mm;
+    align-items: end;
+  }
+  .meta h1 {
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+    font-weight: 700;
+    font-size: 32pt;
+    letter-spacing: .5px;
+    line-height: 1;
+  }
+  .meta .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 14pt;
+    color: var(--muted);
+    align-self: end;
+  }
+  .meta .sub {
+    grid-column: 1 / -1;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14pt;
+    color: var(--muted);
+    margin-top: -2mm;
+  }
+  .meta .curiosidade {
+    grid-column: 1 / -1;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-top: 4mm;
+    max-width: 165mm;
+  }
+  .meta .curiosidade strong {
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+  <div class="frame">
+    <img src="../imagens/outpainted/tanque-02.png" alt="Tanque T-34">
+  </div>
+  <div class="meta">
+    <h1>Tanque T-34</h1>
+    <span class="num">— 01 —</span>
+    <div class="sub">União Soviética · 1940</div>
+    <p class="curiosidade">
+      Foi um dos tanques mais produzidos da história — mais de <strong>80 mil unidades</strong>
+      saíram das fábricas. Sua armadura inclinada e a esteira larga o tornavam difícil de acertar
+      e bom pra atravessar lama, neve e areia.
+    </p>
+  </div>
+</article>
+
+</body>
+</html>

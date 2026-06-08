@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Engy · Curadoria dos 45 finalistas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #0f0e0c;
+    --canvas-2: #1a1815;
+    --text: #f4ede0;
+    --muted: #8a8377;
+    --accent: #d8c89a;
+    --rule: #2a2620;
+    --top: #ffd166;
+    --bom: #c2b280;
+    --cut-bg: #2a1a1a;
+    --cut-stroke: #ff6b6b;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  header.hero {
+    padding: 70px 6vw 40px;
+    max-width: 1500px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  header.hero .eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 18px;
+  }
+  header.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 5.5vw, 64px);
+    line-height: 1.02;
+    margin-bottom: 14px;
+  }
+  header.hero h1 em { font-style: italic; color: var(--accent); }
+  header.hero p.lede {
+    font-size: 16px; color: var(--muted);
+    max-width: 75ch;
+  }
+
+  .legend {
+    margin-top: 24px;
+    display: flex; flex-wrap: wrap; gap: 24px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.top { background: var(--top); box-shadow: 0 0 8px var(--top); }
+  .dot.bom { background: var(--bom); }
+  .dot.cut { background: var(--cut-stroke); }
+  .dot.unrated { background: #444; }
+  .counter {
+    font-family: 'Special Elite', monospace;
+    font-size: 13px; color: var(--accent);
+    margin-top: 12px;
+  }
+
+  main { max-width: 1500px; margin: 0 auto; padding: 50px 4vw 100px; }
+
+  section.cat {
+    margin-bottom: 70px;
+  }
+  section.cat header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  section.cat h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 36px;
+    letter-spacing: -.5px;
+  }
+  section.cat .meta {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    color: var(--accent); text-transform: uppercase;
+  }
+  section.cat .obs {
+    color: var(--muted); font-size: 13.5px;
+    margin: -12px 0 24px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .tile {
+    position: relative;
+    background: var(--canvas-2);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s ease;
+    border: 2px solid transparent;
+  }
+  .tile:hover { transform: translateY(-2px); border-color: var(--rule); }
+  .tile img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #f5f0e2;
+    display: block;
+  }
+  .tile .label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 8px 10px;
+    background: linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,0));
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .tile .badge {
+    position: absolute; top: 8px; left: 8px;
+    padding: 3px 8px;
+    font-family: 'Special Elite', monospace;
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+  }
+  .tile .badge.top { color: var(--top); border: 1px solid var(--top); }
+  .tile .badge.bom { color: var(--bom); border: 1px solid var(--bom); }
+
+  /* Toggle de corte via JS */
+  .tile.cut { border-color: var(--cut-stroke); }
+  .tile.cut img { opacity: .35; filter: grayscale(.8); }
+  .tile.cut::after {
+    content: 'CORTAR';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    font-family: 'Special Elite', monospace;
+    font-size: 16px; letter-spacing: 4px;
+    color: var(--cut-stroke);
+    background: rgba(0,0,0,.85);
+    padding: 6px 14px;
+    border: 2px solid var(--cut-stroke);
+    pointer-events: none;
+  }
+
+  /* Toolbar fixa pra exportar */
+  .toolbar {
+    position: fixed; bottom: 24px; right: 24px;
+    display: flex; gap: 12px;
+    z-index: 100;
+  }
+  .btn {
+    padding: 12px 20px;
+    background: var(--accent); color: var(--canvas);
+    border: none;
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  }
+  .btn:hover { background: #f0dfaa; }
+  .btn.secondary { background: var(--canvas-2); color: var(--accent); border: 1px solid var(--rule); }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 4vw;
+    text-align: center; color: var(--muted);
+    font-size: 13px;
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Engy · livro do gui · curadoria final</div>
+  <h1>Os <em>45 finalistas</em>,<br>revisão antes de processar</h1>
+  <p class="lede">
+    Clique em qualquer imagem pra marcar pra <strong>cortar</strong> (clique de novo pra desfazer). Quando terminar, clique em <strong>Mostrar cortes</strong> no canto inferior direito pra ver a lista — eu uso pra atualizar a curadoria.md e processo só os que ficaram. Estado salvo no localStorage.
+  </p>
+  <div class="legend">
+    <span><span class="dot top"></span>⭐ Top</span>
+    <span><span class="dot bom"></span>✅ Bom</span>
+    <span><span class="dot unrated"></span>○ Sem nota</span>
+    <span><span class="dot cut"></span>✕ Cortado</span>
+  </div>
+  <div class="counter">
+    <span id="total-keep">—</span> mantidos · <span id="total-cut">0</span> cortados
+  </div>
+</header>
+
+<main id="cur">
+  <!-- preenchido por JS -->
+</main>
+
+<div class="toolbar">
+  <button class="btn secondary" onclick="resetCuts()">Resetar</button>
+  <button class="btn" onclick="showCuts()">Mostrar cortes</button>
+</div>
+
+<footer>
+  ENGY · ESTÚDIO · CURADORIA · 2026
+</footer>
+
+<script>
+const DATA = [
+  {
+    cat: "Tanque",
+    icon: "🪖",
+    obs: "Categoria mais forte. 13 finalistas. ⭐ = top do Daniel.",
+    items: [
+      { f: "tanque/tanque-02.jpg", id: "tanque-02", rank: "top" },
+      { f: "tanque/tanque-03.jpg", id: "tanque-03", rank: "bom" },
+      { f: "tanque/tanque-04.jpg", id: "tanque-04", rank: "top" },
+      { f: "tanque/tanque-05.jpg", id: "tanque-05", rank: "top" },
+      { f: "tanque/tanque-06.jpg", id: "tanque-06", rank: "top" },
+      { f: "tanque/tanque-07.jpg", id: "tanque-07", rank: "bom" },
+      { f: "tanque/tanque-08.jpg", id: "tanque-08", rank: "top" },
+      { f: "tanque/tanque-10.jpg", id: "tanque-10", rank: "top" },
+      { f: "tanque/tanque-11.jpg", id: "tanque-11", rank: "bom" },
+      { f: "tanque/tanque-12.jpg", id: "tanque-12", rank: "top" },
+      { f: "tanque/tanque-13.jpg", id: "tanque-13", rank: "top" },
+      { f: "tanque/tanque-16.jpg", id: "tanque-16", rank: "top" },
+      { f: "tanque/tanque-17.jpg", id: "tanque-17", rank: "top" },
+    ]
+  },
+  {
+    cat: "Caminhão",
+    icon: "🚛",
+    obs: "9 finalistas.",
+    items: [
+      { f: "caminhao/caminhao-02.jpg", id: "caminhao-02", rank: "top", note: "Dodge" },
+      { f: "caminhao/caminhao-08.jpg", id: "caminhao-08", rank: "top", note: "pickup vintage" },
+      { f: "caminhao/caminhao-10.jpg", id: "caminhao-10", rank: "top", note: "Scania" },
+      { f: "caminhao/caminhao-11.jpg", id: "caminhao-11", rank: "bom", note: "ZIL" },
+      { f: "caminhao/caminhao-14.jpg", id: "caminhao-14", rank: "top", note: "Chevy" },
+      { f: "caminhao/caminhao-16.jpg", id: "caminhao-16", rank: "bom", note: "ZIL frontal" },
+      { f: "caminhao/caminhao-18.jpg", id: "caminhao-18", rank: "bom", note: "KamAZ" },
+      { f: "caminhao/caminhao-19.jpg", id: "caminhao-19", rank: "bom", note: "Mack" },
+      { f: "caminhao/caminhao-21.jpg", id: "caminhao-21", rank: "top", note: "Silverado" },
+    ]
+  },
+  {
+    cat: "Moto",
+    icon: "🏍",
+    obs: "7 finalistas.",
+    items: [
+      { f: "moto/moto-01.jpg", id: "moto-01", rank: "top", note: "Africa Twin" },
+      { f: "moto/moto-04.jpg", id: "moto-04", rank: "top", note: "Café Racer" },
+      { f: "moto/moto-08.jpg", id: "moto-08", rank: "bom", note: "Yamaha R15" },
+      { f: "moto/moto-13.jpg", id: "moto-13", rank: "top", note: "sportbike" },
+      { f: "moto/moto-14.jpg", id: "moto-14", rank: "bom", note: "Harley custom" },
+      { f: "moto/moto-16.jpg", id: "moto-16", rank: "bom", note: "Kawasaki H2R" },
+      { f: "moto/moto-17.jpg", id: "moto-17", rank: "top", note: "Harley Road King" },
+    ]
+  },
+  {
+    cat: "Avião",
+    icon: "✈️",
+    obs: "7 finalistas + cutaway turbina.",
+    items: [
+      { f: "cutaway/aviao-cut-turbina.jpg", id: "aviao-cut-turbina", rank: "top", note: "🔬 cutaway turbina" },
+      { f: "aviao/aviao-01.jpg", id: "aviao-01", rank: "bom", note: "A320 step 3" },
+      { f: "aviao/aviao-02.jpg", id: "aviao-02", rank: "top", note: "Cessna" },
+      { f: "aviao/aviao-05.jpg", id: "aviao-05", rank: "top", note: "Fw 190 WW2" },
+      { f: "aviao/aviao-06.jpg", id: "aviao-06", rank: "top", note: "PAC 750" },
+      { f: "aviao/aviao-08.jpg", id: "aviao-08", rank: "top", note: "helicóptero" },
+      { f: "aviao/aviao-12.jpg", id: "aviao-12", rank: "bom", note: "Virgin Atlantic 747" },
+      { f: "aviao/aviao-14.jpg", id: "aviao-14", rank: "bom", note: "DC-3 + papel" },
+    ]
+  },
+  {
+    cat: "Trator",
+    icon: "🚜",
+    obs: "6 finalistas + cutaway. trator-01 é favorito do Daniel.",
+    items: [
+      { f: "candidatos/trator-01.jpg", id: "trator-01", rank: "top", note: "👍 T-150 (favorito)" },
+      { f: "cutaway/trator-cut.jpg", id: "trator-cut", rank: "top", note: "🔬 vista explodida" },
+      { f: "candidatos/trator-02.jpg", id: "trator-02", rank: "top" },
+      { f: "candidatos/trator-11.jpg", id: "trator-11", rank: "top" },
+      { f: "candidatos/trator-14.jpg", id: "trator-14", rank: "bom" },
+      { f: "candidatos/trator-16.jpg", id: "trator-16", rank: "top" },
+      { f: "candidatos/trator-19.jpg", id: "trator-19", rank: "top" },
+    ]
+  },
+  {
+    cat: "Bombeiro",
+    icon: "🚒",
+    obs: "3 finalistas + cutaway Biesty.",
+    items: [
+      { f: "cutaway/bombeiro-cut.jpg", id: "bombeiro-cut", rank: "top", note: "🔬 Biesty cutaway" },
+      { f: "bombeiro/bombeiro2-02.jpg", id: "bombeiro2-02", rank: "top", note: "Ural Pripyat" },
+      { f: "bombeiro/bombeiro2-04.jpg", id: "bombeiro2-04", rank: "top", note: "Ural Petrovskoe" },
+      { f: "bombeiro/bombeiro-01.jpg", id: "bombeiro-01", rank: "bom", note: "Pierce step 3" },
+    ]
+  },
+  {
+    cat: "Polícia",
+    icon: "🚓",
+    obs: "2 finalistas confirmados.",
+    items: [
+      { f: "policia/policia-02.jpg", id: "policia-02", rank: "top", note: "LAPD Crown Vic" },
+      { f: "policia/policia-07.jpg", id: "policia-07", rank: "top", note: "Dodge Diplomat 80s" },
+    ]
+  },
+  {
+    cat: "Guindaste",
+    icon: "🏗",
+    obs: "Categoria nova, escolhas do Daniel.",
+    items: [
+      { f: "cutaway/guindaste-01.jpg", id: "guindaste-01", rank: "top", note: "Titanus V-Max" },
+      { f: "cutaway/guindaste-02.jpg", id: "guindaste-02", rank: "top", note: "3D preto/amarelo" },
+    ]
+  },
+  {
+    cat: "Escavadeira",
+    icon: "⛏",
+    obs: "Categoria nova.",
+    items: [
+      { f: "cutaway/escavadeira.jpg", id: "escavadeira", rank: "top", note: "sketch branco/preto" },
+      { f: "caminhao/caminhao-17.jpg", id: "caminhao-17", rank: "bom", note: "escavadeira a lápis (estava em caminhão)" },
+    ]
+  },
+  {
+    cat: "Motor V8",
+    icon: "⚙️",
+    obs: "Extra. Página solta, abre capítulo 'como funciona'.",
+    items: [
+      { f: "cutaway/motor-v8-cut.jpg", id: "motor-v8-cut", rank: "top", note: "blueprint vintage" },
+    ]
+  },
+];
+
+function render() {
+  const main = document.getElementById('cur');
+  let total = 0;
+  for (const sec of DATA) {
+    const html = document.createElement('section');
+    html.className = 'cat';
+    html.innerHTML = `
+      <header>
+        <h2>${sec.icon} ${sec.cat}</h2>
+        <div class="meta">${sec.items.length} finalistas</div>
+      </header>
+      <p class="obs">${sec.obs}</p>
+      <div class="grid"></div>
+    `;
+    const grid = html.querySelector('.grid');
+    for (const it of sec.items) {
+      total++;
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.dataset.id = it.id;
+      tile.innerHTML = `
+        <img src="../imagens/${it.f}" alt="${it.id}" loading="lazy">
+        ${it.rank ? `<div class="badge ${it.rank}">${it.rank === 'top' ? '⭐ TOP' : '✅ BOM'}</div>` : ''}
+        <div class="label">${it.id}${it.note ? ' · ' + it.note : ''}</div>
+      `;
+      tile.addEventListener('click', () => {
+        tile.classList.toggle('cut');
+        save();
+        updateCounters();
+      });
+      grid.appendChild(tile);
+    }
+    main.appendChild(html);
+  }
+  document.getElementById('total-keep').textContent = total;
+  restore();
+  updateCounters();
+}
+
+function save() {
+  const cuts = [...document.querySelectorAll('.tile.cut')].map(t => t.dataset.id);
+  localStorage.setItem('engy-cuts', JSON.stringify(cuts));
+}
+function restore() {
+  try {
+    const cuts = JSON.parse(localStorage.getItem('engy-cuts') || '[]');
+    for (const id of cuts) {
+      const t = document.querySelector(`[data-id="${id}"]`);
+      if (t) t.classList.add('cut');
+    }
+  } catch {}
+}
+function updateCounters() {
+  const cuts = document.querySelectorAll('.tile.cut').length;
+  const total = document.querySelectorAll('.tile').length;
+  document.getElementById('total-cut').textContent = cuts;
+  document.getElementById('total-keep').textContent = total - cuts;
+}
+function resetCuts() {
+  if (!confirm('Limpar todas as marcações de corte?')) return;
+  document.querySelectorAll('.tile.cut').forEach(t => t.classList.remove('cut'));
+  localStorage.removeItem('engy-cuts');
+  updateCounters();
+}
+function showCuts() {
+  const cuts = [...document.querySelectorAll('.tile.cut')].map(t => t.dataset.id);
+  if (!cuts.length) {
+    alert('Nenhum corte marcado ainda. Clique nas imagens pra marcar.');
+    return;
+  }
+  alert('Cortados (' + cuts.length + '):\n\n' + cuts.join('\n') + '\n\nMandar essa lista pro Claude no chat.');
+}
+
+render();
+</script>
+
+</body>
+</html>

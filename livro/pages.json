@@ -1,0 +1,234 @@
+[
+  {
+    "id": "trem-vapor",
+    "year": 1850,
+    "title": "American 4-4-0",
+    "sub": "USA · 1850",
+    "body": "Long before cars or planes, fire and steam moved the world. The American 4-4-0 was the workhorse of the rails, racing iron and timber across a young United States.",
+    "quote": null
+  },
+  {
+    "id": "trem-corte",
+    "year": 1890,
+    "title": "Saddle Tank Locomotive",
+    "sub": "United Kingdom · 1890",
+    "body": "Across the ocean, smaller engines like the 0-4-0 Saddle Tank puffed through factories and ports. Open it up and you find a tiny world inside: firebox, boiler, pistons.",
+    "quote": null
+  },
+  {
+    "id": "motor-v8-cut",
+    "year": 1904,
+    "title": "The V8 Engine",
+    "sub": "France · 1904",
+    "body": "While trains still ruled the rails, inventors were dreaming of horse-less carriages. The V8 — eight cylinders firing in turn — gave cars the heart they needed to fly down a road.",
+    "quote": null
+  },
+  {
+    "id": "trator-cuts",
+    "year": 1935,
+    "title": "Oliver 70",
+    "sub": "USA · 1935",
+    "body": "On the farm, horses were giving way to iron. The Oliver 70 turned plowing into something a single farmer could do all morning. Two ways to see it: whole, or in pieces.",
+    "quote": null
+  },
+  {
+    "id": "aviao-05",
+    "year": 1941,
+    "title": "Focke-Wulf Fw 190",
+    "sub": "Germany · 1941",
+    "body": "By the time tractors were transforming fields, fighter planes filled the skies. The Fw 190 was fast, agile, and feared — one of the most advanced aircraft of the Second World War.",
+    "quote": null
+  },
+  {
+    "id": "tanque-06",
+    "year": 1942,
+    "title": "Tiger I",
+    "sub": "Germany · 1942",
+    "body": "On the ground at the same time, the Tiger I rolled into battle. Heavy armor, a huge cannon — it looked unstoppable. But every machine has a weakness, and the war taught hard lessons.",
+    "quote": null
+  },
+  {
+    "id": "tanque-02",
+    "year": 1945,
+    "title": "M26 Pershing",
+    "sub": "USA · 1945",
+    "body": "Three years later, the M26 Pershing answered. Bigger gun, thicker armor — built to face the Tiger head-on. By the time it arrived, the war was almost over.",
+    "quote": null
+  },
+  {
+    "id": "caminhao-02",
+    "year": 1946,
+    "title": "Dodge Power Wagon",
+    "sub": "USA · 1946",
+    "body": "Peace came, and the trucks of war found a new job. The Dodge Power Wagon swapped the battlefield for the farm, hauling hay, mud, and weekend adventures.",
+    "quote": null
+  },
+  {
+    "id": "trator-engine",
+    "year": 1946,
+    "title": "Ferguson TE20",
+    "sub": "United Kingdom · 1946",
+    "body": "That same year, the little gray Fergie quietly changed farming forever. Inside, a small engine that's not so different from a car's — but bolted to wheels made to dig in and pull.",
+    "quote": null
+  },
+  {
+    "id": "caminhao-14",
+    "year": 1947,
+    "title": "Chevy Advance Design",
+    "sub": "USA · 1947",
+    "body": "Right next to the Power Wagon, Chevy rolled out a softer-looking pickup with a curvier hood. Same job, gentler style. The American driveway had a new favorite.",
+    "quote": null
+  },
+  {
+    "id": "aviao-02",
+    "year": 1956,
+    "title": "Cessna 172",
+    "sub": "USA · 1956",
+    "body": "A decade later, planes shrank to fit small airports and student pilots. The Cessna 172 became the most-flown training aircraft ever built — many pilots learn the sky in one.",
+    "quote": null
+  },
+  {
+    "id": "moto-04",
+    "year": 1959,
+    "title": "Triumph Bonneville",
+    "sub": "United Kingdom · 1959",
+    "body": "Meanwhile, on twisty British roads, the Triumph Bonneville mixed two cylinders and a leather seat into the perfect classic motorcycle. Style and speed, in equal parts.",
+    "quote": "_Two wheels, one open road._"
+  },
+  {
+    "id": "escavadeira",
+    "year": 1960,
+    "title": "Hydraulic Excavator",
+    "sub": "1960",
+    "body": "On construction sites everywhere, the hydraulic excavator took over the digging. Its arm could lift, push, and scoop — driven by oil pressure pumped through fat hoses.",
+    "quote": null
+  },
+  {
+    "id": "caminhao-17",
+    "year": 1965,
+    "title": "Excavator on Tracks",
+    "sub": "1965",
+    "body": "Tracks instead of wheels meant work could happen in mud, sand, even on snow. Excavators became the bulldogs of the worksite — slow, heavy, and unstoppable.",
+    "quote": null
+  },
+  {
+    "id": "caminhao-11",
+    "year": 1966,
+    "title": "ZIL-131",
+    "sub": "Soviet Union · 1966",
+    "body": "On the other side of the world, the ZIL-131 hauled almost anything across Soviet roads — and where there were no roads, it made its own.",
+    "quote": null
+  },
+  {
+    "id": "aviao-08",
+    "year": 1966,
+    "title": "Sikorsky CH-53",
+    "sub": "USA · 1966",
+    "body": "Up above, helicopters joined the family. The CH-53 Sea Stallion could carry tanks slung from below — a flying truck for places no road could reach.",
+    "quote": null
+  },
+  {
+    "id": "aviao-turbina",
+    "year": 1969,
+    "title": "The Jet Engine",
+    "sub": "747 · USA · 1969 — turbine inside",
+    "body": "Open up an airplane's engine and you find this: blades spinning faster than your eyes can follow, sucking in air, mixing it with fuel, lighting it up. Out the back comes thrust — and the plane goes forward.",
+    "quote": "_Air in, fire out, plane forward._"
+  },
+  {
+    "id": "aviao-12",
+    "year": 1969,
+    "title": "Boeing 747",
+    "sub": "USA · 1969",
+    "body": "The same year humans walked on the Moon, the Boeing 747 took off — the first jumbo jet. Suddenly airplanes carried 400 people at a time, and the world felt smaller.",
+    "quote": null
+  },
+  {
+    "id": "guindaste-01",
+    "year": 1970,
+    "title": "Crawler Crane",
+    "sub": "1970",
+    "body": "Down below, cities were growing taller. The crawler crane crept onto building sites on giant treads, lifting steel beams a hundred meters into the sky.",
+    "quote": null
+  },
+  {
+    "id": "trator-01",
+    "year": 1976,
+    "title": "T-150 Tractor",
+    "sub": "Soviet Union · 1976",
+    "body": "Back on the farm, tractors had grown enormous. The Soviet T-150 had four-wheel drive and an articulated body that bent in the middle — built to plow endless Russian fields.",
+    "quote": null
+  },
+  {
+    "id": "bombeiro-cut",
+    "year": 1980,
+    "title": "Fire Truck",
+    "sub": "1980 — inside out",
+    "body": "Every fire truck is a tiny city of tools. Ladder, water tank, pump, hoses, helmets, axes — open one up like this and you can spot a job for every part.",
+    "quote": null
+  },
+  {
+    "id": "policia-07",
+    "year": 1980,
+    "title": "Dodge Diplomat",
+    "sub": "USA · 1980s",
+    "body": "On American streets in the 80s, the boxy Dodge Diplomat became the classic police cruiser. Big V8, big trunk, big lights on top — the unmistakable shape of the era.",
+    "quote": null
+  },
+  {
+    "id": "moto-14",
+    "year": 1986,
+    "title": "Harley Heritage Softail",
+    "sub": "USA · 1986",
+    "body": "Motorcycles got nostalgic. The Harley-Davidson Heritage Softail looked like it stepped out of 1950 but rode like a modern machine. Old soul, fresh suspension.",
+    "quote": null
+  },
+  {
+    "id": "bombeiro2-02",
+    "year": 1986,
+    "title": "Ural Fire Truck",
+    "sub": "Soviet Union · 1986",
+    "body": "That same year, in a small town called Pripyat, Ural fire trucks raced toward a reactor that wouldn't stop burning. Some machines remember the most important nights.",
+    "quote": null
+  },
+  {
+    "id": "moto-17",
+    "year": 1994,
+    "title": "Harley Road King",
+    "sub": "USA · 1994",
+    "body": "By the 90s, the touring motorcycle had become its own kind of luxury. The Road King carried riders coast to coast — chrome, leather, and the open highway.",
+    "quote": null
+  },
+  {
+    "id": "caminhao-21",
+    "year": 1998,
+    "title": "Chevy Silverado",
+    "sub": "USA · 1998",
+    "body": "Pickup trucks kept getting bigger and more comfortable. The Silverado became one of America's best-selling vehicles — a workhorse that also doubled as the family car.",
+    "quote": null
+  },
+  {
+    "id": "trem-moderno",
+    "year": 2007,
+    "title": "Shinkansen N700",
+    "sub": "Japan · 2007",
+    "body": "Trains, too, had grown up. The Japanese Shinkansen N700 glides across the country at 300 km/h — silent, smooth, almost flying. Steam, never go away. We just got better at it.",
+    "quote": "_From smoke to silence, in 150 years._"
+  },
+  {
+    "id": "guindaste-02",
+    "year": 2010,
+    "title": "Liebherr LR 13000",
+    "sub": "Germany · 2010",
+    "body": "The biggest crane ever built on caterpillar tracks. The LR 13000 can lift the weight of 5 fully loaded Boeing 747s. Skyscrapers and wind turbines wouldn't exist without it.",
+    "quote": null
+  },
+  {
+    "id": "andy-fim",
+    "year": 9999,
+    "title": "See You Soon",
+    "sub": "— Andy",
+    "body": "From the first steam engine to the tallest crane, machines keep changing. But there's always a kid somewhere holding a wrench, wanting to know how things work. That's where every new machine begins.",
+    "quote": null
+  }
+]
